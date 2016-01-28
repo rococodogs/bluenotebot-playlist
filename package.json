@@ -1,0 +1,21 @@
+{
+  "name": "bluenote-bot-playlist",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "DEBUG=* node index",
+    "start": "node index"
+  },
+  "keywords": [],
+  "author": "Adam Malantonio <adam.malantonio@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "2.2.0",
+    "dotenv": "2.0.0",
+    "spotify": "0.3.0",
+    "spotify-web-api-node": "2.2.0",
+    "twitter": "1.2.5"
+  }
+}

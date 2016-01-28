@@ -27,7 +27,7 @@ t.stream('user', function (stream) {
     if (!tweet.user)
       return
 
-    if (tweet.user.screen_name === 'bluenotebot') && !tweet.in_reply_to_status_id)
+    if (tweet.user.screen_name === 'bluenotebot' && !tweet.in_reply_to_status_id)
       return handleTweet(tweet)
   })
   stream.on('error', function (err) {

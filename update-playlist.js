@@ -42,7 +42,6 @@ module.exports = function updatePlaylist (opts, callback) {
     })
     .then(function (tracks) {
       debug('got %d tracks, replacing playlist', tracks.length)
-      console.log('replacing tracks')
       return s.replaceTracksInPlaylist(username, playlistId, tracks)
     })
     .then(function () {

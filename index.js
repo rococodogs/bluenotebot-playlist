@@ -31,7 +31,7 @@ t.stream('user', function (stream) {
       return handleTweet(tweet)
   })
   stream.on('error', function (err) {
-    console.log('err!', err)
+    debug('err!', err)
   })
 })
 

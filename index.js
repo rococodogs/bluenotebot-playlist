@@ -14,7 +14,6 @@ var t = new Twitter({
 
 var spotToken = require('./get-access-token')
 var updatePlaylist = require('./update-playlist')
-var spotify_album_prefix = 'https://open.spotify.com/album/'
 
 // debug by getting the latest tweet
 // t.get('statuses/user_timeline', {screen_name: 'bluenotebot'}, function (err, tweets) {
@@ -41,7 +40,7 @@ function handleTweet (tweet) {
   var url
   if (urls.length > 1) {
     for (var i = 0; i < urls.length; i++) {
-      if (urls[i].expanded_url.indexOf(spotify_album_prefix) === 0) {
+      if (urls[i].expanded_url.indexOf('spotify.com') > -1) {
         url = urls[i].expanded_url
         break
       }
@@ -55,24 +54,10 @@ function handleTweet (tweet) {
     return
   }
 
-  var reg = /^https:\/\/open\.spotify\.com\/(\w+)\/(.+)/
-  var m = url.match(reg)
-
-  if (!m || m.length === 1) {
-    debug('reg did not match url (%s)', url)
-    return
-  }
-
-  var type = m[1]
-  var id = m[2]
-
-  debug('type:', type)
-  debug('id:', id)
-
-  return spotifyHandoff(type, id)
+  return spotifyHandoff(url)
 }
 
-function spotifyHandoff (type, id) {
+function spotifyHandoff (url) {
   spotToken(process.env.SPOTIFY_CLIENT_ID, process.env.SPOTIFY_CLIENT_SECRET, function (token) {
     if (!token) {
       debug('could not get a spotify token :(')
@@ -85,14 +70,12 @@ function spotifyHandoff (type, id) {
       playlistId: process.env.SPOTIFY_PLAYLIST_ID,
       username: process.env.SPOTIFY_USERNAME,
       accessToken: token,
-      type: type,
-      id: id
+      url: url
     }
 
     return updatePlaylist(spotopts, function (err) {
       if (err) {
-        debug('error with updating playlist:', err.message)
-        debug(err)
+        debug('error with updating playlist: %s', err.message)
         return
       }
 

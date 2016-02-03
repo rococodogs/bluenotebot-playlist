@@ -15,6 +15,7 @@
     "debug": "2.2.0",
     "dotenv": "2.0.0",
     "spotify": "0.3.0",
+    "spotify-uri": "1.0.0",
     "spotify-web-api-node": "2.2.0",
     "twitter": "1.2.5"
   }

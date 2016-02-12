@@ -26,8 +26,16 @@ t.stream('user', function (stream) {
     if (!tweet.user)
       return
 
-    if (tweet.user.screen_name === 'bluenotebot' && !tweet.in_reply_to_status_id)
-      return handleTweet(tweet)
+    if (tweet.user.screen_name === 'bluenotebot') {
+      // daily tweets
+      if (!tweet.in_reply_to_status_id)
+        return handleTweet(tweet)
+
+      // or tweets to me (if set)
+      var me = process.env.TWITTER_USERNAME
+      if (me && tweet.in_reply_to_screen_name === me)
+        return handleTweet(tweet)
+    }
   })
   stream.on('error', function (err) {
     debug('err!', err)
